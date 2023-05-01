@@ -6,7 +6,7 @@
 /*   By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:08:42 by madmax42          #+#    #+#             */
-/*   Updated: 2023/05/01 09:44:48 by madmax42         ###   ########.fr       */
+/*   Updated: 2023/05/01 17:06:43 by madmax42         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	eating(t_philo *philo)
 		pthread_mutex_lock(&philo->p_mutex->print_state);
 		update_meal_count(philo);
 		printf("%ld %d EATING\n", get_time_ms(philo->p_data), philo->id);
+		pthread_mutex_lock(&philo->p_mutex->print_state);
+		wait_for_time(philo->p_data, philo->p_data->time_to_eat, philo);
 	}
 	release_forks(philo);
 }
