@@ -6,13 +6,13 @@
 /*   By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 19:15:38 by madmax42          #+#    #+#             */
-/*   Updated: 2023/05/01 09:03:19 by madmax42         ###   ########.fr       */
+/*   Updated: 2023/05/01 09:21:08 by madmax42         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	check_philo_alive(t_philo *philo)
+int	check_philo_alive(t_philo *philo)
 {
 	pthrad_mutex_lock(&philo->p_mutex->has_dead);
 	if (philo->p_data->dead)
