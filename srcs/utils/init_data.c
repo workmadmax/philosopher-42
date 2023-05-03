@@ -6,7 +6,7 @@
 /*   By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 10:14:20 by madmax42          #+#    #+#             */
-/*   Updated: 2023/05/01 10:33:22 by madmax42         ###   ########.fr       */
+/*   Updated: 2023/05/03 16:42:50 by madmax42         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,33 @@ int	init_forks(t_data *data)
 		else
 			data->philos[idx].p_mutex->right_fork = &data->mutex.forks[idx + 1];
 	}
+	return (0);
+}
+
+int	init_time_stap(t_data *data)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL))
+		return (error_msg("Error: gettimeofday failed\n"));
+	data->start_time_sec = time.tv_sec;
+	data->start_time_usec = time.tv_usec;
+	data->start_time = (data->start_time_sec * 1000)
+		+ (data->start_time_usec / 1000);
+	return (0);
+}
+
+int	create_thread(t_data *data, int idx)
+{
+	pthread_mutex_unlock(&data->mutex.thread_create);
+	data->philos[idx].id = idx + 1;
+	data->philos[idx].nb_meals = 0;
+	data->philos[idx].p_data = data;
+	pthread_mutex_lock(&data->mutex.has_dead);
+	if (pthread_create(&data->philos[idx].thread,
+			NULL, &start_philo_routine, &data->philos[idx]))
+		return (error_msg("Error: thread create failed\n"));
+	if (usleep(40) == -1)
+		return (1);
 	return (0);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   chk_routine.c                                      :+:      :+:    :+:   */
+/*   check_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 19:15:38 by madmax42          #+#    #+#             */
-/*   Updated: 2023/05/01 09:21:08 by madmax42         ###   ########.fr       */
+/*   Updated: 2023/05/03 16:05:08 by madmax42         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	check_philo_alive(t_philo *philo)
 {
-	pthrad_mutex_lock(&philo->p_mutex->has_dead);
+	pthread_mutex_lock(&philo->p_mutex->has_dead);
 	if (philo->p_data->dead)
 	{
 		pthread_mutex_unlock(&philo->p_mutex->has_dead);
 		return (1);
 	}
-	pthread_mutex_unlock(&philo->p_data->dead);
+	pthread_mutex_unlock(&philo->p_data->mutex.has_dead);
 	return (0);
 }
 
@@ -38,8 +38,8 @@ int	check_meals_limit(t_philo *philo)
 
 void	check_dead(t_philo *philo)
 {
-	int	idx;
-	int	time;
+	int		idx;
+	long	time;
 
 	idx = 0;
 	pthread_mutex_lock(&philo->p_data->mutex.print_state);
@@ -54,7 +54,7 @@ void	check_dead(t_philo *philo)
 			pthread_mutex_lock(&philo->p_data->mutex.has_dead);
 			philo->p_data->dead = 1;
 			pthread_mutex_unlock(&philo->p_data->mutex.has_dead);
-			printf("%ld %d died\n", time, get_time_ms(philo->p_data),
+			printf("%ld %ld %d dead\n", time, get_time_ms(philo->p_data),
 				philo->p_data->philos[idx].id);
 		}
 		pthread_mutex_unlock(&philo->p_data->mutex.print_state);

@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   routine.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/11 09:46:13 by madmax42          #+#    #+#             */
-/*   Updated: 2023/05/03 15:59:42 by madmax42         ###   ########.fr       */
+/*   Created: 2023/05/01 09:45:13 by madmax42          #+#    #+#             */
+/*   Updated: 2023/05/02 09:45:34 by madmax42         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef ROUTINE_H
+# define ROUTINE_H
 
-# include <pthread.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <sys/time.h>
+# include "philo.h"
 
-# include "struct.h"
-# include "checkers.h"
-# include "defines.h"
-# include "utils.h"
-# include "routine.h"
+/* eating */
+
+void	pick_up_forks(t_philo *philo);
+void	update_meal_count(t_philo *philo);
+void	release_forks(t_philo *philo);
+void	eating(t_philo *philo);
+
+/* routine */
+
+void	*start_philo_routine(void *args);
+void	routine_one_philo(t_philo *philo);
+void	routine(t_philo *philo);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/11 10:18:49 by madmax42          #+#    #+#              #
-#    Updated: 2023/04/25 13:56:05 by madmax42         ###   ########.fr        #
+#    Updated: 2023/05/03 16:43:07 by madmax42         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,17 @@ CC							=	gcc -Wall -Wextra -Werror -g3 -pthread
 RM							=	rm -f
 INCLUDES					=	-I./include
 
-SRCS						=	checkers.c ft.c init_data.c \
-									main.c routine.c time.c
+SRCS						=	arguments.c check_routine.c \
+								eating.c routine.c \
+								clean_data.c init_data.c libft.c \
+								message.c time_stap.c \
+								main.c
 									
+VPATH						=	./srcs/ \
+								./srcs/checkers/ \
+								./srcs/routine/ \
+								./srcs/utils/ \
+
 OBJS_DIR					=	objects
 OBJS						=	$(patsubst %.c, $(OBJS_DIR)/%.o, $(SRCS))
 

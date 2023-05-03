@@ -6,7 +6,7 @@
 /*   By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 16:44:02 by madmax42          #+#    #+#             */
-/*   Updated: 2023/05/01 17:08:38 by madmax42         ###   ########.fr       */
+/*   Updated: 2023/05/03 16:05:42 by madmax42         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	*start_philo_routine(void *args)
 
 void	routine_one_philo(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->p_mutex->right_fork);
+	pthread_mutex_lock(philo->p_mutex->right_fork);
 	print_state(philo, FORK);
 	wait_for_time(philo->p_data, philo->p_data->time_to_die, philo);
-	pthread_mutex_unlock(&philo->p_mutex->right_fork);
+	pthread_mutex_unlock(philo->p_mutex->right_fork);
 	printf("%ld %d died\n", get_time_ms(philo->p_data), philo->id);
 }
 

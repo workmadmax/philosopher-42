@@ -6,7 +6,7 @@
 /*   By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 16:57:32 by madmax42          #+#    #+#             */
-/*   Updated: 2023/04/30 17:03:56 by madmax42         ###   ########.fr       */
+/*   Updated: 2023/05/03 16:40:15 by madmax42         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_philo
 	long			start_time;
 	long			last_meal;
 	struct s_data	*p_data;
+	pthread_t		thread;
 	t_mutex			*p_mutex;
 }	t_philo;
 
