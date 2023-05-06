@@ -6,7 +6,7 @@
 /*   By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 10:14:20 by madmax42          #+#    #+#             */
-/*   Updated: 2023/05/03 16:42:50 by madmax42         ###   ########.fr       */
+/*   Updated: 2023/05/06 11:26:43 by madmax42         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ int	init_params(t_data *data, char **argv)
 	return (0);
 }
 
-int	init_mutex(t_data *data)
+int	init_mutex(t_data *mutex)
 {
-	if (pthread_mutex_init(&data->mutex.has_dead, NULL))
-		return (error_msg("Error: mutex init failed\n"));
-	if (pthread_mutex_init(&data->mutex.enough_meals, NULL))
-		return (error_msg("Error: mutex init failed\n"));
-	if (pthread_mutex_init(&data->mutex.print_state, NULL))
-		return (error_msg("Error: mutex init failed\n"));
-	if (pthread_mutex_init(&data->mutex.thread_create, NULL))
-		return (error_msg("Error: mutex init failed\n"));
+	if (pthread_mutex_init(&mutex->has_dead, NULL))
+		return (close_data(mutex));
+	if (pthread_mutex_init(&mutex->enough_meals, NULL))
+		return (close_data(mutex));
+	if (pthread_mutex_init(&mutex->print_state, NULL))
+		return (close_data(mutex));
+	if (pthread_mutex_init(&mutex->thread_create, NULL))
+		return (close_data(mutex));
 	return (0);
 }
 
@@ -53,24 +53,24 @@ int	init_forks(t_data *data)
 	idx = -1;
 	data->philos = ft_calloc(sizeof(t_philo), data->nb_philo);
 	if (!data->philos)
-		return (error_msg("Error: calloc failed\n"));
-	data->mutex.forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+		return (close_data(data));
+	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 			* data->nb_philo);
-	if (!data->mutex.forks)
-		return (error_msg("Error: malloc failed\n"));
+	if (!data->forks)
+		return (close_data(data));
 	while (++idx < data->nb_philo)
 	{
-		if (pthread_mutex_init(&data->mutex.forks[idx], NULL))
-			return (error_msg("Error: mutex init failed\n"));
+		if (pthread_mutex_init(&data->forks[idx], NULL))
+			return (close_data(data));
 	}
 	idx = -1;
 	while (++idx < data->nb_philo)
 	{
-		data->philos[idx].p_mutex->left_fork = &data->mutex.forks[idx];
+		data->philos[idx].left_fork = &data->forks[idx];
 		if (idx == data->nb_philo - 1)
-			data->philos[idx].p_mutex->right_fork = &data->mutex.forks[0];
+			data->philos[idx].right_fork = &data->forks[0];
 		else
-			data->philos[idx].p_mutex->right_fork = &data->mutex.forks[idx + 1];
+			data->philos[idx].right_fork = &data->forks[idx + 1];
 	}
 	return (0);
 }
@@ -79,8 +79,8 @@ int	init_time_stap(t_data *data)
 {
 	struct timeval	time;
 
-	if (gettimeofday(&time, NULL))
-		return (error_msg("Error: gettimeofday failed\n"));
+	if (gettimeofday(&time, NULL) != 0)
+		return (close_data(data));
 	data->start_time_sec = time.tv_sec;
 	data->start_time_usec = time.tv_usec;
 	data->start_time = (data->start_time_sec * 1000)
@@ -90,14 +90,14 @@ int	init_time_stap(t_data *data)
 
 int	create_thread(t_data *data, int idx)
 {
-	pthread_mutex_unlock(&data->mutex.thread_create);
+	pthread_mutex_unlock(&data->thread_create);
 	data->philos[idx].id = idx + 1;
 	data->philos[idx].nb_meals = 0;
 	data->philos[idx].p_data = data;
-	pthread_mutex_lock(&data->mutex.has_dead);
-	if (pthread_create(&data->philos[idx].thread,
-			NULL, &start_philo_routine, &data->philos[idx]))
-		return (error_msg("Error: thread create failed\n"));
+	pthread_mutex_lock(&data->thread_create);
+	if (pthread_create(&data->philos[idx].thread, NULL,
+			&start_philo_routine, &data->philos[idx]))
+		return (close_data(data));
 	if (usleep(40) == -1)
 		return (1);
 	return (0);

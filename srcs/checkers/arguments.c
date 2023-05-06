@@ -6,7 +6,7 @@
 /*   By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 17:30:27 by madmax42          #+#    #+#             */
-/*   Updated: 2023/04/30 19:12:53 by madmax42         ###   ########.fr       */
+/*   Updated: 2023/05/03 18:17:32 by madmax42         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	check_int_overflow(char *args)
 		size++;
 	if (size > 11)
 		return (1);
-	if (size == 11 && ft_atol(args) > INT_MAX)
+	if (size == 11 && ft_atol(args) > INT_MIN)
 		return (1);
 	if (size == 10 && ft_atol(args) > INT_MAX)
 		return (1);
@@ -59,16 +59,16 @@ int	check_input_validity(int argc, char **argv)
 
 	idx = 1;
 	if (argc < 5 || argc > 6)
-		return (1);
+		return (error_msg("Error: bad arguments!\n"));
 	while (argv[idx])
 	{
 		if (check_args_isdigit(argv[idx]))
-			return (1);
+			return (error_msg("Error: arguments only digits!\n"));
 		if (check_int_overflow(argv[idx]))
-			return (1);
+			return (error_msg("Error: arguments overflow!\n"));
 		if (check_positive_number(argv[idx]))
-			return (1);
-		idx++;
+			return (error_msg("Error: arguments must be positive!\n"));
+		++idx;
 	}
 	return (0);
 }
