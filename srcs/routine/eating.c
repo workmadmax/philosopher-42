@@ -6,7 +6,7 @@
 /*   By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:08:42 by madmax42          #+#    #+#             */
-/*   Updated: 2023/05/06 11:32:23 by madmax42         ###   ########.fr       */
+/*   Updated: 2023/05/08 09:58:45 by madmax42         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	eating(t_philo *philo)
 	{
 		pthread_mutex_lock(&philo->p_data->print_state);
 		update_meal_count(philo);
-		printf("%ld %d EATING\n", get_time_ms(philo->p_data), philo->id);
+		printf("Time: (%ld) Tid: (%d) Action: %s\n",
+			get_time_ms(philo->p_data), philo->id, EATING);
 		pthread_mutex_unlock(&philo->p_data->print_state);
 		wait_for_time(philo->p_data, philo->p_data->time_to_eat, philo);
 	}
