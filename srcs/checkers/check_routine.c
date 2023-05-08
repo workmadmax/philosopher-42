@@ -6,7 +6,7 @@
 /*   By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 19:15:38 by madmax42          #+#    #+#             */
-/*   Updated: 2023/05/03 18:22:58 by madmax42         ###   ########.fr       */
+/*   Updated: 2023/05/08 10:09:12 by madmax42         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	check_dead(t_data *data)
 			pthread_mutex_lock(&data->has_dead);
 			data->dead = 1;
 			pthread_mutex_unlock(&data->has_dead);
-			printf("%ld %d died\n", get_time_ms(data), data->philos[idx].id);
+			printf("Time: (%ld) Tid: (%d) died\n",
+				get_time_ms(data), data->philos[idx].id);
 		}
 		pthread_mutex_unlock(&data->print_state);
 		return ;
