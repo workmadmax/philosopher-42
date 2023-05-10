@@ -6,7 +6,7 @@
 /*   By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 10:14:20 by madmax42          #+#    #+#             */
-/*   Updated: 2023/05/06 11:26:43 by madmax42         ###   ########.fr       */
+/*   Updated: 2023/05/10 14:02:39 by madmax42         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	init_params(t_data *data, char **argv)
 		data->meals = ft_atol(argv[5]);
 	else
 		data->meals = -1;
-	if (data->nb_philo > 200 || data->time_to_die < 60 || data->time_to_eat < 60
+/* 	if (data->nb_philo > 200 || data->time_to_die < 60 || data->time_to_eat < 60
 		|| data->time_to_sleep < 60)
 	{
 		error_msg("Error: bad arguments! \
 			Can't have over 200philos or time under 60ms\n");
 		return (1);
-	}
+	} */
 	return (0);
 }
 
@@ -98,7 +98,7 @@ int	create_thread(t_data *data, int idx)
 	if (pthread_create(&data->philos[idx].thread, NULL,
 			&start_philo_routine, &data->philos[idx]))
 		return (close_data(data));
-	if (usleep(40) == -1)
+	if (usleep(100) == -1)
 		return (1);
 	return (0);
 }
