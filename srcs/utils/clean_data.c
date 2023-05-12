@@ -6,7 +6,7 @@
 /*   By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 09:47:42 by madmax42          #+#    #+#             */
-/*   Updated: 2023/05/06 11:28:48 by madmax42         ###   ########.fr       */
+/*   Updated: 2023/05/12 09:34:13 by madmax42         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	mutex_destroy(t_data *mutex)
 {
-	if (pthread_mutex_init(&mutex->has_dead, NULL))
+	if (pthread_mutex_destroy(&mutex->has_dead))
 		return (close_data(mutex));
-	if (pthread_mutex_init(&mutex->enough_meals, NULL))
+	if (pthread_mutex_destroy(&mutex->enough_meals))
 		return (close_data(mutex));
-	if (pthread_mutex_init(&mutex->print_state, NULL))
+	if (pthread_mutex_destroy(&mutex->print_state))
 		return (close_data(mutex));
-	if (pthread_mutex_init(&mutex->thread_create, NULL))
+	if (pthread_mutex_destroy(&mutex->thread_create))
 		return (close_data(mutex));
 	return (0);
 }

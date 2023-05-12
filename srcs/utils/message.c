@@ -6,7 +6,7 @@
 /*   By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:50:39 by madmax42          #+#    #+#             */
-/*   Updated: 2023/05/10 14:01:49 by madmax42         ###   ########.fr       */
+/*   Updated: 2023/05/12 09:40:28 by madmax42         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,4 @@ void	print_state(t_philo *philo, char *state)
 		printf("Time: (%ld) Tid: (%d) Action: %s\n",
 			get_time_ms(philo->p_data), philo->id, state);
 	pthread_mutex_unlock(&philo->p_data->print_state);
-	usleep(1000);
 }
