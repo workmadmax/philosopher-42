@@ -6,7 +6,7 @@
 /*   By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:08:42 by madmax42          #+#    #+#             */
-/*   Updated: 2023/05/08 09:58:45 by madmax42         ###   ########.fr       */
+/*   Updated: 2023/05/12 20:02:58 by madmax42         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,16 @@ void	update_meal_count(t_philo *philo)
 
 void	release_forks(t_philo *philo)
 {
-	pthread_mutex_unlock(philo->right_fork);
-	pthread_mutex_unlock(philo->left_fork);
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+	}
 }
 
 void	eating(t_philo *philo)
