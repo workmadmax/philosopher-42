@@ -6,12 +6,11 @@
 /*   By: madmax42 <madmax42@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 09:09:17 by madmax42          #+#    #+#             */
-/*   Updated: 2023/05/12 20:23:49 by madmax42         ###   ########.fr       */
+/*   Updated: 2023/05/13 10:51:12 by madmax42         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 
 long	get_time_ms(t_data *time)
 {
@@ -27,22 +26,6 @@ long	get_time_ms(t_data *time)
 
 int	wait_for_time(t_data *data, int time_to_wait, t_philo *philo)
 {
-	long	start_time;
-	long	remaining_time;
-
-	start_time = get_time_ms(data);
-	remaining_time = time_to_wait;
-	while (remaining_time > 0 && check_philo_alive(philo))
-	{
-		if (usleep(remaining_time * 1000) == -1)
-			return (close_data(data));
-		remaining_time = time_to_wait - (get_time_ms(data) - start_time);
-	}
-	return (0);
-}
-
-/* int	wait_for_time(t_data *data, int time_to_wait, t_philo *philo)
-{
 	long	time;
 	long	start_time;
 
@@ -55,4 +38,4 @@ int	wait_for_time(t_data *data, int time_to_wait, t_philo *philo)
 		time = get_time_ms(data);
 	}
 	return (0);
-} */
+}
